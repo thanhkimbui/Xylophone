@@ -19,14 +19,17 @@ class ViewController: UIViewController {
     
     
     @IBAction func keyPressed(_ sender: UIButton) {
-        print(sender)
-        print(sender.backgroundColor)
-        print(sender.currentBackgroundImage)
-        playSound()
+//        print(sender.currentTitle!)
+//        print(sender.layer.opacity)
+        playSound(soundText: sender.currentTitle!)
+        sender.layer.opacity = 0.5
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(20), execute: {
+            sender.layer.opacity = 1.0
+        })
     }
     
-    func playSound() {
-        let url = Bundle.main.url(forResource: "C", withExtension: "wav")
+    func playSound(soundText: String) {
+        let url = Bundle.main.url(forResource: soundText, withExtension: "wav")
         player = try! AVAudioPlayer(contentsOf: url!)
         player?.play()
     }
